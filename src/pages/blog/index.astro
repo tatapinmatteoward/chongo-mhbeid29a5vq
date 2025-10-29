@@ -1,0 +1,34 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import { getCollection } from 'astro:content';
+
+const posts = await getCollection('pages', ({ id )} => id.startsWith('blog/'));
+const sortedPosts = posts.sort((a, b) => {
+  const dateA = a.data.date ? new Date(a.data.date).getTime() : 0;
+  const dateB = b.data.date ? new Date(b.data.date).getTime() : 0;
+  return dateB - dateA;
+)};
+---
+
+<Layout title="PC Fixer Blog">
+  <div class="container mx-auto px-4 py-8">
+    <h1 class="text-4xl font-bold text-center mb-8 bg-gradient-to-r from-blue-500 to-green-500 bg-clip-text text-transparent">
+      Troubleshoot and Fix Common PC Errors Easily
+    </h1>
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+      {sortedPosts.map((post) => {
+        const slug = post.id.replace('blog/', '').replace('.md', '');
+        return (
+          <a href={`/blog/${slug}/`} class="block bg-white rounded-lg shadow-md hover:shadow-xl transition-shadow duration-300 border border-gray-200 hover:border-blue-300 overflow-hidden group">
+            <div class="p-6">
+              <h2 class="text-xl font-semibold mb-2 text-gray-800 group-hover:text-blue-600 transition-colors">{post.data.title}</h2>
+              {post.data.date && ( <p class="text-sm text-gray-500 mb-2">{new Date(post.data.date).toLocaleDateString()}</p>}
+              {post.data.excerpt && <p class="text-gray-600">{post.data.excerpt}</p>}
+            </div>
+            <div class="h-1 bg-gradient-to-r from-blue-400 to-green-400 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+          </a>
+        );
+      )}}
+    </div>
+  </div>
+</Layout>
