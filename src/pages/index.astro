@@ -1,0 +1,52 @@
+---
+import Layout from '../layouts/Layout.astro';
+import { getEntry } from 'astro:content';
+
+const home = await getEntry('pages', 'home');
+if (!home) throw new Error('Home page not found');
+const { Content } = await home.render();
+---
+
+<Layout title={home.data.title}>
+  <div class="min-h-screen bg-gradient-to-br from-blue-500 via-purple-600 to-indigo-700 text-white">
+    <!-- Hero Section -->
+    <div class="flex flex-col items-center justify-center py-20 px-4">
+      <h1 class="text-5xl md:text-7xl font-bold mb-4 text-center drop-shadow-lg">
+        {home.data.title}
+      </h1>
+      {home.data.description && (
+        <p class="text-xl md:text-2xl mb-8 text-center max-w-2xl opacity-90">
+          {home.data.description}
+        </p>
+      )}
+      <a
+        href="/blog/"
+        class="bg-white text-indigo-600 font-semibold py-3 px-8 rounded-full shadow-lg hover:bg-gray-100 transition duration-300 transform hover:scale-105"
+      >
+        View Blog
+      </a>
+    </div>
+
+    <!-- Content Section -->
+    <div class="bg-white text-gray-800 rounded-t-3xl px-4 py-12 md:px-12">
+      <div class="max-w-4xl mx-auto">
+        <Content />
+        <!-- Modern Cards Example (if Content doesn't include) -->
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mt-12">
+          <div class="bg-gradient-to-r from-green-400 to-blue-500 p-6 rounded-lg shadow-lg text-white">
+            <h3 class="text-xl font-bold mb-2">Fix Blue Screen Errors</h3>
+            <p>Learn quick fixes for common BSOD issues.</p>
+          </div>
+          <div class="bg-gradient-to-r from-pink-400 to-red-500 p-6 rounded-lg shadow-lg text-white">
+            <h3 class="text-xl font-bold mb-2">Speed Up Your PC</h3>
+            <p>Tips to optimize performance instantly.</p>
+          </div>
+          <div class="bg-gradient-to-r from-yellow-400 to-orange-500 p-6 rounded-lg shadow-lg text-white">
+            <h3 class="text-xl font-bold mb-2">Virus Removal Guide</h3>
+            <p>Step-by-step malware removal tutorials.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</Layout>
