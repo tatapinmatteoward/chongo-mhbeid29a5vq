@@ -1,0 +1,61 @@
+---
+import '../styles/global.css';
+
+interface Props {
+  title: string;
+  description?: string;
+}
+
+const { title, description = "Default description" } = Astro.props;
+---
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="description" content={description} />
+    <meta name="viewport" content="width=device-width" />
+    <title>{title}</title>
+  </head>
+  <body class="bg-gray-50 text-gray-900">
+    <nav class="sticky top-0 z-50 bg-gradient-to-r from-blue-600 to-purple-600 backdrop-blur-md shadow-lg">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="flex justify-between items-center h-16">
+          <div class="flex-shrink-0">
+            <a href="/" class="text-white font-bold text-xl hover:text-gray-200 transition-colors">PC Fixer Blog</a>
+          </div>
+          <div class="hidden md:block">
+            <div class="ml-10 flex items-baseline space-x-4">
+              <a href="/" class="text-white hover:text-gray-200 px-3 py-2 rounded-md text-sm font-medium transition-colors">Home</a>
+              <a href="/about/" class="text-white hover:text-gray-200 px-3 py-2 rounded-md text-sm font-medium transition-colors">About</a>
+              <a href="/blog/" class="text-white hover:text-gray-200 px-3 py-2 rounded-md text-sm font-medium transition-colors">Blog</a>
+            </div>
+          </div>
+          <div class="md:hidden">
+            <button type="button" class="text-white hover:text-gray-200 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white" aria-expanded="false">
+              <span class="sr-only">Open main menu</span>
+              <svg class="h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+              </svg>
+            </button>
+          </div>
+        </div>
+      </div>
+      <div class="md:hidden hidden">
+        <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3 bg-gradient-to-r from-blue-600 to-purple-600">
+          <a href="/" class="text-white hover:text-gray-200 block px-3 py-2 rounded-md text-base font-medium">Home</a>
+          <a href="/about/" class="text-white hover:text-gray-200 block px-3 py-2 rounded-md text-base font-medium">About</a>
+          <a href="/blog/" class="text-white hover:text-gray-200 block px-3 py-2 rounded-md text-base font-medium">Blog</a>
+        </div>
+      </div>
+    </nav>
+    <main class="flex-1">
+      <slot />
+    </main>
+    <footer class="bg-gray-800 text-white py-8">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+        <p class="text-sm">&copy; 2023 PC Fixer Blog. Troubleshoot and Fix Common PC Errors Easily.</p>
+        <p class="text-sm mt-2">All rights reserved.</p>
+      </div>
+    </footer>
+  </body>
+</html>
